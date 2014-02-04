@@ -1,9 +1,11 @@
-package com.epam.koryagin.matrix;
+package com.epam.koryagin.matrix.rectangle;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
+
+import com.epam.koryagin.matrix.exception.MatrixException;
 
 /**
  * Generic class Matrix 
@@ -44,6 +46,7 @@ public class Matrix<T> implements Serializable {
 	}
 	
 	public static List<List<Double>> random(int size) throws MatrixException{
+		long start = System.nanoTime();
 		if ( size < 0 ){
 			LOGGER.error("Negative matrix size");
 			throw new MatrixException("Negative matrix size");
@@ -56,6 +59,7 @@ public class Matrix<T> implements Serializable {
 					random.get(i).add(new Double(value));
 				}
 		}
+		LOGGER.info("Random matrix creatin time "+ (System.nanoTime()-start)+ "nano sec" );
 		return random;
 	}
 	

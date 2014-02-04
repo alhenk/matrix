@@ -1,4 +1,4 @@
-package com.epam.koryagin.matrix;
+package com.epam.koryagin.matrix.exception;
 
 public class MatrixException extends Exception{
 	private static final long serialVersionUID = 1L;

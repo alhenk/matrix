@@ -1,0 +1,25 @@
+Matrix
+
+USE CASE: Description
+A user entered a size n of a matrix A
+then the user entered a size m of a matrix B
+The matrix factory created two matrices 
+with random values [-n,n] and [-m,m]
+and util class Matrices multiply them
+
+Triggers
+1. The user entered a size of the first matrix
+2. The user entered a size of the second matrix
+
+Actors
+1. User
+2. Matrix
+3. Matrix Factory
+4. Matrices
+
+Steps of execution
+1) User entered a size n of a matrix A
+2) MatrixFactory create matrix A
+3) User entered a size n of a matrix B
+4) MatrixFactory create matrix B
+5) Matrices multiply A and B

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
+import com.epam.koryagin.matrix.exception.MatrixException;
 import com.epam.koryagin.matrix.node.Node;
+import com.epam.koryagin.matrix.rectangle.Matrix;
 
 public class Runner {
 	private static final Logger LOGGER = Logger.getLogger(Runner.class);

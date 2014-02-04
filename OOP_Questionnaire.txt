@@ -1,0 +1,19 @@
+Questionnaire
+
+1)	Java beans (is, setters, getters, def constructor)
+	equal(), hashCode(), toString()
+	don't try to write equal and hashCode by yourself, just generate them with IDE
+	implement Serializable
+2)	Java docs
+3)	Junit
+4)	Ant or Maven
+5)	Version control - Git
+6)	Time tracking
+7)	Exceptions
+	Null Pointer Exception
+	Illegalargumentexception
+	Input values and  parameters  validation
+8)	Logger
+9)	Properties
+
+
