@@ -1,6 +1,10 @@
 package com.epam.koryagin.matrix;
 
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
+
+
 /**
  * Generic class Matrix 
  * @author Alhen
@@ -8,6 +12,7 @@ import java.util.ArrayList;
  * @param <T>
  */
 public class Matrix<T> {
+	private static final Logger LOGGER = Logger.getLogger(Matrix.class);
 	private int row;
 	private int column;
 	private ArrayList<ArrayList<T>> matrix =
@@ -21,8 +26,12 @@ public class Matrix<T> {
 	 * Constructor of square matrix
 	 * @param row
 	 * @param object
+	 * @throws MatrixException 
 	 */
-	public Matrix(int row, T object){
+	public Matrix(int row, T object) throws MatrixException{
+		if (row < 0 ){
+			LOGGER.error("Sample tank created");
+			throw new MatrixException("Negative row number");}
 		this.row = row;
 		this.column = row;
 		this.setMatrix(new  ArrayList<ArrayList<T>>());
@@ -40,7 +49,8 @@ public class Matrix<T> {
 	 * @param column
 	 * @param object
 	 */
-	public Matrix(int row, int column, T object){
+	public Matrix (int row, int column, T object){
+		
 		this.row = row;
 		this.column = column;
 		this.setMatrix(new  ArrayList<ArrayList<T>>());
