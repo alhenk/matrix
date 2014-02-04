@@ -20,49 +20,6 @@ public class Matrix<T> implements Serializable {
 	private List<List<T>> matrix =
 			new  ArrayList<List<T>>();
 	
-	/**
-	 * Create identity matrix collection
-	 * @param size
-	 * @return
-	 * @throws MatrixException 
-	 */
-	public static List<List<Double>> identity(int size) throws MatrixException{
-		if ( size < 0 ){
-			LOGGER.error("Negative matrix size");
-			throw new MatrixException("Negative matrix size");
-		}
-		List<List<Double>> identity = new  ArrayList<List<Double>>();
-		for(int i=0; i < size; i++){
-				identity.add(new ArrayList<Double>());
-				for(int j = 0; j < size; j++){
-					if(i==j){
-						identity.get(i).add(1.0);
-					} else {
-						identity.get(i).add(0.0);
-					}
-				}
-		}
-		return identity;
-	}
-	
-	public static List<List<Double>> random(int size) throws MatrixException{
-		long start = System.nanoTime();
-		if ( size < 0 ){
-			LOGGER.error("Negative matrix size");
-			throw new MatrixException("Negative matrix size");
-		}
-		List<List<Double>> random = new  ArrayList<List<Double>>();
-		for(int i=0; i < size; i++){
-				random.add(new ArrayList<Double>());
-				for(int j = 0; j < size; j++){
-					int value = -size + (int)(Math.random() * ((size - (-size)) + 1));
-					random.get(i).add(new Double(value));
-				}
-		}
-		LOGGER.info("Random matrix creatin time "+ (System.nanoTime()-start)+ "nano sec" );
-		return random;
-	}
-	
 	public Matrix(){
 		super();
 	}
@@ -110,7 +67,10 @@ public class Matrix<T> implements Serializable {
 				}
 		}
 	}
-		
+	/**
+	 * Get dimension - rows	
+	 * @return row number
+	 */
 	public int getRow() {
 		return row;
 	}
@@ -125,6 +85,10 @@ public class Matrix<T> implements Serializable {
 			throw new MatrixException("row number is out of range");}
 		this.row = row;
 	}
+	/**
+	 * Get dimension - columns
+	 * @return column number
+	 */
 	public int getColumn() {
 		return column;
 	}

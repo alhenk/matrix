@@ -53,14 +53,37 @@ public class Runner {
 
 		
 		try {
-			shmatrix = new Matrix<Double>(Matrix.random(4));
+			shmatrix = new Matrix<Double>(Matrices.random(4));
 		} catch (MatrixException e){
 			System.err.println(e);
 		}
 		
 		System.out.println(shmatrix);
+		int i=2; int j = 3;
+		System.out.println(shmatrix.getMatrix().get(i).get(j));
+		Matrix<Double> shmatrixA = new Matrix<Double>();
+		Matrix<Double> shmatrixB = new Matrix<Double>();
+		Matrix<Double> shmatrixC = new Matrix<Double>();
+		Matrix<Double> shmatrixD = new Matrix<Double>(Matrices.identity(4));
+		try {
+			shmatrixA = new Matrix<Double>(Matrices.random(4));
+		} catch (MatrixException e){
+			System.err.println(e);
+		}
+		try {
+			shmatrixB = new Matrix<Double>(Matrices.random(4));
+		} catch (MatrixException e){
+			System.err.println(e);
+		}
 		
-		
+		try {
+			shmatrixC = Matrices.multiply(shmatrixA, shmatrixB);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(shmatrixA);
+		System.out.println(shmatrixB);
+		System.out.println(shmatrixC);
 		
 	}
 }
