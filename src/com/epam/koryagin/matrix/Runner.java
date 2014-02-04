@@ -38,9 +38,11 @@ public class Runner {
 		Matrix<Double> shmatrix = new Matrix<Double>();
 
 		
-		shmatrix.copyMatrix(biglist);
+		shmatrix = new Matrix<Double>(Matrix.random(10));
 		
-		System.out.println(shmatrix);	
+		System.out.println(shmatrix);
+		
+		
 		
 	}
 }

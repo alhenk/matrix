@@ -1,23 +1,55 @@
 package com.epam.koryagin.matrix;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-
 
 /**
  * Generic class Matrix 
  * @author Alhen
- *
  * @param <T>
  */
-public class Matrix<T> {
+public class Matrix<T> implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(Matrix.class);
 	private int row;
 	private int column;
 	private List<List<T>> matrix =
 			new  ArrayList<List<T>>();
+	
+	/**
+	 * Create identity matrix collection
+	 * @param size
+	 * @return
+	 */
+	public static List<List<Double>> identity(int size){
+		List<List<Double>> identity = new  ArrayList<List<Double>>();
+		for(int i=0; i < size; i++){
+				identity.add(new ArrayList<Double>());
+				for(int j = 0; j < size; j++){
+					if(i==j){
+						identity.get(i).add(1.0);
+					} else {
+						identity.get(i).add(0.0);
+					}
+				}
+		}
+		return identity;
+	}
+	
+	
+	public static List<List<Double>> random(int size){
+		List<List<Double>> random = new  ArrayList<List<Double>>();
+		for(int i=0; i < size; i++){
+				random.add(new ArrayList<Double>());
+				for(int j = 0; j < size; j++){
+					int value = -size + (int)(Math.random() * ((size - (-size)) + 1));
+					random.get(i).add(new Double(value));
+				}
+		}
+		return random;
+	}
 	
 	public Matrix(){
 		super();
@@ -30,7 +62,7 @@ public class Matrix<T> {
 	 * @throws MatrixException 
 	 */
 	public Matrix(int row, T object) throws MatrixException{
-		if (row < 0 ){
+		if ( row < 0 ){
 			LOGGER.error("Negative row number");
 			throw new MatrixException("Negative row number");
 		}
@@ -38,9 +70,9 @@ public class Matrix<T> {
 		this.column = row;
 		this.setMatrix(new  ArrayList<List<T>>());
 		for(int i=0; i < row; i++){
-				this.getMatrix().add(new ArrayList<T>());
+				this.matrix.add(new ArrayList<T>());
 				for(int j = 0; j < row; j++){
-					this.getMatrix().get(i).add(object);
+					this.matrix.get(i).add(object);
 				}
 		}
 	}
@@ -53,16 +85,16 @@ public class Matrix<T> {
 	 * @throws MatrixException 
 	 */
 	public Matrix (int row, int column, T object) throws MatrixException{
-		if (row < 0 || column < 0){
+		if (row < 0 || column < 0 ){
 			LOGGER.error("Negative row or column number");
 			throw new MatrixException("Negative row or column number");}
 		this.row = row;
 		this.column = column;
-		this.setMatrix(new  ArrayList<List<T>>());
+		this.matrix = new  ArrayList<List<T>>();
 		for(int i=0; i < row; i++){
-				this.getMatrix().add(new ArrayList<T>());
+				this.matrix.add(new ArrayList<T>());
 				for(int j = 0; j < column; j++){
-					this.getMatrix().get(i).set(j, object);
+					this.matrix.get(i).set(j, object);
 				}
 		}
 	}
@@ -77,29 +109,29 @@ public class Matrix<T> {
 	 */
 	public void setRow(int row) throws MatrixException {
 		if (row < 0 || row > this.matrix.size()  ){
-			LOGGER.error("Negative row number");
-			throw new MatrixException("Negative row number");}
+			LOGGER.error("row number is out of range");
+			throw new MatrixException("row number is out of range");}
 		this.row = row;
 	}
 	public int getColumn() {
 		return column;
 	}
 	/**
-	 * set column with range checking
+	 * Set column with range checking
 	 * @param column
 	 * @throws MatrixException
 	 */
 	public void setColumn(int column) throws MatrixException {
-		if (column < 0 ){
-			LOGGER.error("Negative column number");
-			throw new MatrixException("Negative column number");}
+		if (column < 0 || column > this.column() ){
+			LOGGER.error("column number is out of range");
+			throw new MatrixException("column number is out of range");}
 		this.column = column;
 	}
 
 	/**
 	 * Generate a new instance 
-	 * of the matrix collection field
-	 * @return copyMatrix 
+	 * of the 2D List<T>
+	 * @return newMatrix 
 	 */
 	public List<List<T>> yieldMatrix() {
 		List<List<T>> newMatrix = new  ArrayList<List<T>>();
@@ -110,20 +142,26 @@ public class Matrix<T> {
 	}
 
 	/**
-	 * Copy the collection in matrix field 
+	 * copying constructor -
+	 * copy the collection in matrix field
+	 * initialized row and column fields
+	 * the column value is the maximum length of tuples
+	 * @param - 2D List<T> 
 	 * @return void
 	 */
-	public void copyMatrix(List<List<T>> matrix) {
+	public Matrix(List<List<T>> matrix) {
 		List<List<T>> newMatrix = new  ArrayList<List<T>>();
 		for(List<T> list : matrix){
 			ArrayList<T> tuple = new ArrayList<T>(list); 
 			newMatrix.add(tuple);
 		}
 		this.matrix = newMatrix;
-
+		this.row = newMatrix.size();
+		this.column = column();
 	}
 	/**
 	 * Unsafe getter
+	 * direct access through the reference
 	 * @return
 	 */
 	public List<List<T>> getMatrix() {
@@ -131,10 +169,24 @@ public class Matrix<T> {
 	}
 	/**
 	 * Unsafe setter
+	 * direct access through the reference
 	 * @param matrix
 	 */
 	public void setMatrix(List<List<T>> matrix) {
 		this.matrix = matrix;
+	}
+	/**
+	 * retur maximum length of the tuples in the matrix
+	 * @return
+	 */
+	private int column(){
+		int maxLength = 0;
+		for(List<T> list : matrix){
+			if(list.size() > maxLength){
+				maxLength = list.size(); 
+			}
+		}
+		return 0;
 	}
 	
 	@Override
@@ -147,16 +199,6 @@ public class Matrix<T> {
 			}
 			sb.append("\n");
 		}
-//		for(int i = 0; i<this.row; i++){
-//			for(int j = 0; j<this.column; j++){
-//				sb.append(this.matrix.get(i).get(j));
-//				sb.append("\t");
-//			}
-//			sb.append("\n");
-//		}
 		return sb.toString();
 	}
-
-	
-
 }

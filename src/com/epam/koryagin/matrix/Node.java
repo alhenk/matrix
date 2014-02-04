@@ -1,15 +1,16 @@
 package com.epam.koryagin.matrix;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
 /**
  * Generic class for matrix element
  * @author Alhen
- *
  * @param <T>
  */
-public class Node<T> {
+public class Node<T> implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private T value;
 	
@@ -21,10 +22,22 @@ public class Node<T> {
 		SecureRandom random = new SecureRandom();
 		this.id = new BigInteger(130, random).toString(32);
 	}
-	
+	/**
+	 * Constructor with parameter
+	 * @param value
+	 */
 	public Node(T value){
 		this();
 		this.value = value;
+	}
+	/**
+	 * Constructor with parameters
+	 * @param id
+	 * @param value
+	 */
+	public Node(String id, T value){
+		this(value);
+		this.id = id;
 	}
 	
 	public String getId() {
