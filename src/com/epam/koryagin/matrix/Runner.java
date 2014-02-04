@@ -2,17 +2,29 @@ package com.epam.koryagin.matrix;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
+
+import com.epam.koryagin.matrix.node.Node;
 
 public class Runner {
+	private static final Logger LOGGER = Logger.getLogger(Runner.class);
 		
 	public static void main(String[] args) {
 		Node<Double> node = new Node<Double>(10.2);
 		System.out.println("ID = " + node.getId());
 		System.out.println("VALUE = " + node.getValue());
+		
 		int dimension = 5;
 		Matrix<Node<Double>> matrix = new Matrix<Node<Double>>();
 		try {
 			matrix = new Matrix<Node<Double>>(dimension, node);
+			StringBuilder sb = new StringBuilder()
+					.append("The Matrix ")
+					.append(dimension).append("x").append(dimension)
+					.append(" of ").append(node.getClass())
+					.append(" created");
+			LOGGER.info(sb.toString());
+			System.out.println(sb.toString());
 		} catch (MatrixException e) {
 			e.printStackTrace();
 		}
@@ -38,7 +50,11 @@ public class Runner {
 		Matrix<Double> shmatrix = new Matrix<Double>();
 
 		
-		shmatrix = new Matrix<Double>(Matrix.random(10));
+		try {
+			shmatrix = new Matrix<Double>(Matrix.random(4));
+		} catch (MatrixException e){
+			System.err.println(e);
+		}
 		
 		System.out.println(shmatrix);
 		

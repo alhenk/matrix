@@ -1,4 +1,4 @@
-package com.epam.koryagin.matrix;
+package com.epam.koryagin.matrix.node;
 
 import java.io.Serializable;
 import java.math.BigInteger;

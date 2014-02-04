@@ -22,8 +22,13 @@ public class Matrix<T> implements Serializable {
 	 * Create identity matrix collection
 	 * @param size
 	 * @return
+	 * @throws MatrixException 
 	 */
-	public static List<List<Double>> identity(int size){
+	public static List<List<Double>> identity(int size) throws MatrixException{
+		if ( size < 0 ){
+			LOGGER.error("Negative matrix size");
+			throw new MatrixException("Negative matrix size");
+		}
 		List<List<Double>> identity = new  ArrayList<List<Double>>();
 		for(int i=0; i < size; i++){
 				identity.add(new ArrayList<Double>());
@@ -38,8 +43,11 @@ public class Matrix<T> implements Serializable {
 		return identity;
 	}
 	
-	
-	public static List<List<Double>> random(int size){
+	public static List<List<Double>> random(int size) throws MatrixException{
+		if ( size < 0 ){
+			LOGGER.error("Negative matrix size");
+			throw new MatrixException("Negative matrix size");
+		}
 		List<List<Double>> random = new  ArrayList<List<Double>>();
 		for(int i=0; i < size; i++){
 				random.add(new ArrayList<Double>());
@@ -176,7 +184,7 @@ public class Matrix<T> implements Serializable {
 		this.matrix = matrix;
 	}
 	/**
-	 * retur maximum length of the tuples in the matrix
+	 * return maximum length of the tuples in the matrix
 	 * @return
 	 */
 	private int column(){
