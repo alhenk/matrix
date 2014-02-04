@@ -1,6 +1,7 @@
 package com.epam.koryagin.matrix;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -15,8 +16,8 @@ public class Matrix<T> {
 	private static final Logger LOGGER = Logger.getLogger(Matrix.class);
 	private int row;
 	private int column;
-	private ArrayList<ArrayList<T>> matrix =
-			new  ArrayList<ArrayList<T>>();
+	private List<List<T>> matrix =
+			new  ArrayList<List<T>>();
 	
 	public Matrix(){
 		super();
@@ -30,13 +31,14 @@ public class Matrix<T> {
 	 */
 	public Matrix(int row, T object) throws MatrixException{
 		if (row < 0 ){
-			LOGGER.error("Sample tank created");
-			throw new MatrixException("Negative row number");}
+			LOGGER.error("Negative row number");
+			throw new MatrixException("Negative row number");
+		}
 		this.row = row;
 		this.column = row;
-		this.setMatrix(new  ArrayList<ArrayList<T>>());
+		this.matrix =new  ArrayList<List<T>>();
 		for(int i=0; i < row; i++){
-				this.getMatrix().add(new ArrayList<T>());
+				this.matrix.add(new ArrayList<T>());
 				for(int j = 0; j < row; j++){
 					this.getMatrix().get(i).add(object);
 				}
@@ -48,14 +50,17 @@ public class Matrix<T> {
 	 * @param row
 	 * @param column
 	 * @param object
+	 * @throws MatrixException 
 	 */
-	public Matrix (int row, int column, T object){
-		
+	public Matrix (int row, int column, T object) throws MatrixException{
+		if (row < 0 || column < 0){
+			LOGGER.error("Negative row or column number");
+			throw new MatrixException("Negative row or column number");}
 		this.row = row;
 		this.column = column;
-		this.setMatrix(new  ArrayList<ArrayList<T>>());
+		this.matrix = new  ArrayList<List<T>>();
 		for(int i=0; i < row; i++){
-				this.getMatrix().add(new ArrayList<T>());
+				this.matrix.add(new ArrayList<T>());
 				for(int j = 0; j < column; j++){
 					this.getMatrix().get(i).set(j, object);
 				}
@@ -65,22 +70,36 @@ public class Matrix<T> {
 	public int getRow() {
 		return row;
 	}
-	public void setRow(int row) {
+	public void setRow(int row) throws MatrixException {
+		if (row < 0 ){
+			LOGGER.error("Negative row number");
+			throw new MatrixException("Negative row number");}
 		this.row = row;
 	}
 	public int getColumn() {
 		return column;
 	}
-	public void setColumn(int column) {
+	public void setColumn(int column) throws MatrixException {
+		if (column < 0 ){
+			LOGGER.error("Negative column number");
+			throw new MatrixException("Negative column number");}
 		this.column = column;
 	}
 
-	public ArrayList<ArrayList<T>> getMatrix() {
-		return matrix;
+	public List<List<T>> getMatrix() {
+		List<List<T>> copyMatrix = new  ArrayList<List<T>>();
+		for(List<T> list : this.matrix){
+			copyMatrix.add(list);
+		}
+		return copyMatrix;
 	}
 
-	public void setMatrix(ArrayList<ArrayList<T>> matrix) {
-		this.matrix = matrix;
+	public void setMatrix(List<List<T>> matrix) {
+		List<List<T>> copyMatrix = new  ArrayList<List<T>>();
+		for(List<T> list : matrix){
+			copyMatrix.add(list);
+		}
+		this.matrix = copyMatrix;
 	}
 	
 	@Override
