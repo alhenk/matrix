@@ -36,9 +36,9 @@ public class Matrix<T> {
 		}
 		this.row = row;
 		this.column = row;
-		this.matrix =new  ArrayList<List<T>>();
+		this.setMatrix(new  ArrayList<List<T>>());
 		for(int i=0; i < row; i++){
-				this.matrix.add(new ArrayList<T>());
+				this.getMatrix().add(new ArrayList<T>());
 				for(int j = 0; j < row; j++){
 					this.getMatrix().get(i).add(object);
 				}
@@ -58,9 +58,9 @@ public class Matrix<T> {
 			throw new MatrixException("Negative row or column number");}
 		this.row = row;
 		this.column = column;
-		this.matrix = new  ArrayList<List<T>>();
+		this.setMatrix(new  ArrayList<List<T>>());
 		for(int i=0; i < row; i++){
-				this.matrix.add(new ArrayList<T>());
+				this.getMatrix().add(new ArrayList<T>());
 				for(int j = 0; j < column; j++){
 					this.getMatrix().get(i).set(j, object);
 				}
@@ -70,8 +70,13 @@ public class Matrix<T> {
 	public int getRow() {
 		return row;
 	}
+	/**
+	 * set row with range checking
+	 * @param row
+	 * @throws MatrixException
+	 */
 	public void setRow(int row) throws MatrixException {
-		if (row < 0 ){
+		if (row < 0 || row > this.matrix.size()  ){
 			LOGGER.error("Negative row number");
 			throw new MatrixException("Negative row number");}
 		this.row = row;
@@ -79,6 +84,11 @@ public class Matrix<T> {
 	public int getColumn() {
 		return column;
 	}
+	/**
+	 * set column with range checking
+	 * @param column
+	 * @throws MatrixException
+	 */
 	public void setColumn(int column) throws MatrixException {
 		if (column < 0 ){
 			LOGGER.error("Negative column number");
@@ -86,35 +96,67 @@ public class Matrix<T> {
 		this.column = column;
 	}
 
-	public List<List<T>> getMatrix() {
-		List<List<T>> copyMatrix = new  ArrayList<List<T>>();
+	/**
+	 * Generate a new instance 
+	 * of the matrix collection field
+	 * @return copyMatrix 
+	 */
+	public List<List<T>> yieldMatrix() {
+		List<List<T>> newMatrix = new  ArrayList<List<T>>();
 		for(List<T> list : this.matrix){
-			copyMatrix.add(list);
+			newMatrix.add(list);
 		}
-		return copyMatrix;
+		return newMatrix;
 	}
 
-	public void setMatrix(List<List<T>> matrix) {
-		List<List<T>> copyMatrix = new  ArrayList<List<T>>();
+	/**
+	 * Copy the collection in matrix field 
+	 * @return void
+	 */
+	public void copyMatrix(List<List<T>> matrix) {
+		List<List<T>> newMatrix = new  ArrayList<List<T>>();
 		for(List<T> list : matrix){
-			copyMatrix.add(list);
+			ArrayList<T> tuple = new ArrayList<T>(list); 
+			newMatrix.add(tuple);
 		}
-		this.matrix = copyMatrix;
+		this.matrix = newMatrix;
+
+	}
+	/**
+	 * Unsafe getter
+	 * @return
+	 */
+	public List<List<T>> getMatrix() {
+		return matrix;
+	}
+	/**
+	 * Unsafe setter
+	 * @param matrix
+	 */
+	public void setMatrix(List<List<T>> matrix) {
+		this.matrix = matrix;
 	}
 	
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		
-		for(int i = 0; i<this.row; i++){
-			for(int j = 0; j<this.column; j++){
-				sb.append(this.matrix.get(i).get(j));
+		for(List<T> tuple : matrix){
+			for(T element : tuple){
+				sb.append(element);
 				sb.append("\t");
 			}
 			sb.append("\n");
 		}
+//		for(int i = 0; i<this.row; i++){
+//			for(int j = 0; j<this.column; j++){
+//				sb.append(this.matrix.get(i).get(j));
+//				sb.append("\t");
+//			}
+//			sb.append("\n");
+//		}
 		return sb.toString();
 	}
+
 	
 
 }

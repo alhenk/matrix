@@ -1,5 +1,8 @@
 package com.epam.koryagin.matrix;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Runner {
 		
 	public static void main(String[] args) {
@@ -11,10 +14,33 @@ public class Runner {
 		try {
 			matrix = new Matrix<Node<Double>>(dimension, node);
 		} catch (MatrixException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		System.out.println(matrix);	
+		
+		List<Double> list = new ArrayList<Double>();
+		list.add(2.3);
+		list.add(2.3);
+		list.add(2.3);
+		list.add(2.3);
+		list.add(2.3);
+		
+		List<List<Double>> biglist = new ArrayList<List<Double>>();
+		biglist.add(list);
+		biglist.add(list);
+		biglist.add(list);
+
+		
+		System.out.println("List Size = " + list.size());
+		System.out.println("Big List Size = " + biglist.size());
+		
+		Matrix<Double> shmatrix = new Matrix<Double>();
+
+		
+		shmatrix.copyMatrix(biglist);
+		
+		System.out.println(shmatrix);	
+		
 	}
 }
