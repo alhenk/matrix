@@ -20,7 +20,7 @@ public class Matrices {
 	}
 	
 	/**
-	 * Create identity matrix collection
+	 * Create identity <Double> array
 	 * @param size
 	 * @return
 	 * @throws MatrixException 
@@ -49,7 +49,7 @@ public class Matrices {
 	}
 	
 	/**
-	 * Create zero matrix collection
+	 * Create zero <Double>array
 	 * @param size
 	 * @return
 	 * @throws MatrixException 
@@ -69,12 +69,12 @@ public class Matrices {
 		return zerro;
 	}
 	/**
-	 * Create random square matrix collection
+	 * Create random <Double> square array
 	 * @param size
 	 * @return
 	 * @throws MatrixException
 	 */
-	public static List<List<Double>> random(int size) throws MatrixException{
+	public static List<List<Double>> randomDouble(int size) throws MatrixException{
 		long start = System.nanoTime();
 		if ( size < 0 ){
 			LOGGER.error("Negative matrix size");
@@ -92,13 +92,36 @@ public class Matrices {
 		return random;
 	}
 	/**
-	 * Multiply two matrices A X B
+	 * Create random <Integer> square array
+	 * @param size
+	 * @return
+	 * @throws MatrixException
+	 */
+	public static List<List<Integer>> randomInteger(int size) throws MatrixException{
+		long start = System.nanoTime();
+		if ( size < 0 ){
+			LOGGER.error("Negative matrix size");
+			throw new MatrixException("Negative matrix size");
+		}
+		List<List<Integer>> random = new  ArrayList<List<Integer>>();
+		for(int i=0; i < size; i++){
+				random.add(new ArrayList<Integer>());
+				for(int j = 0; j < size; j++){
+					int value = -size + (int)(Math.random() * ((size - (-size)) + 1));
+					random.get(i).add(new Integer(value));
+				}
+		}
+		LOGGER.info("Random matrix creation time "+ (System.nanoTime()-start)+ " nano sec" );
+		return random;
+	}
+	/**
+	 * Multiply two <Double> matrices A X B
 	 * @param matrixA
 	 * @param matrixB
 	 * @return matrixC the product result
 	 * @throws Exception
 	 */
-	public static Matrix<Double> multiply(Matrix<Double> matrixA, Matrix<Double> matrixB ) throws Exception{
+	public static Matrix<Double> multiplyDouble(Matrix<Double> matrixA, Matrix<Double> matrixB ) throws Exception{
 		long start = System.nanoTime();
 		int hightB = matrixB.getHight();
 		int widthA = matrixA.getWidth(); 
@@ -124,4 +147,39 @@ public class Matrices {
 		LOGGER.info("matrix multiplication time "+ (System.nanoTime()-start)+ " nano sec" );
 		return matrixC;
 	}
+	/**
+	 * Multiply two <Integer> matrices A X B
+	 * @param matrixA
+	 * @param matrixB
+	 * @return matrixC the product result
+	 * @throws Exception
+	 */
+	public static Matrix<Integer> multiplyInteger(Matrix<Integer> matrixA, Matrix<Integer> matrixB ) throws Exception{
+		long start = System.nanoTime();
+		int hightB = matrixB.getHight();
+		int widthA = matrixA.getWidth(); 
+		int hightC = matrixA.getHight();
+		int widthC = matrixB.getWidth();
+		if (widthA != hightB) 
+			throw new Exception();
+		Matrix<Integer> matrixC = new Matrix<Integer>();
+		try {
+			matrixC = new Matrix<Integer>(hightC, widthC, new Integer(0));
+		} catch (MatrixException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < widthA; i++) {
+		for (int j = 0; j < hightB; j++) {
+			int value = 0;
+			for (int k = 0; k < widthC; k++) { 
+				value += matrixA.getMatrix().get(i).get(k) * matrixB.getMatrix().get(k).get(j) ;
+			}
+			matrixC.getMatrix().get(i).set(j, new Integer(value));
+		}
+		}
+		LOGGER.info("matrix multiplication time "+ (System.nanoTime()-start)+ " nano sec" );
+		return matrixC;
+	}
 }
+	
+

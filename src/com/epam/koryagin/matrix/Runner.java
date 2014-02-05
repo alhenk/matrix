@@ -11,6 +11,33 @@ public class Runner {
 		
 	public static void main(String[] args) {
 		
+		Matrix<Integer> shmatrixA = new Matrix<Integer>();
+		Matrix<Integer> shmatrixB = new Matrix<Integer>();
+		Matrix<Integer> shmatrixC = new Matrix<Integer>();
+		try {
+			shmatrixA = new Matrix<Integer>(Matrices.randomInteger(3));
+			System.out.println("Matrix A is created");
+			System.out.println(shmatrixA);
+		} catch (MatrixException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			shmatrixB = new Matrix<Integer>(Matrices.randomInteger(3));
+			System.out.println("Matrix B is created");
+			System.out.println(shmatrixB);
+		} catch (MatrixException e1) {
+			e1.printStackTrace();
+		}
+		
+		try {
+			shmatrixC = Matrices.multiplyInteger(shmatrixA, shmatrixB);
+			System.out.println("C = A x B");
+			System.out.println(shmatrixC);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
+		
 		Matrix<Double> matrixA= new Matrix<Double>();
 		Matrix<Double> matrixB= new Matrix<Double>();
 		Matrix<Double> matrixC= new Matrix<Double>();
@@ -29,7 +56,7 @@ public class Runner {
 				}
 				dimension = userInput.nextInt();
 				try {
-					matrixA= new Matrix<Double>(Matrices.random(dimension));
+					matrixA= new Matrix<Double>(Matrices.randomDouble(dimension));
 					System.out.println("Matrix A is created");
 					System.out.println(matrixA);
 					LOGGER.info("Matrix A is created"); 
@@ -52,7 +79,7 @@ public class Runner {
 				}
 				dimension = userInput.nextInt();
 				try {
-					matrixB= new Matrix<Double>(Matrices.random(dimension));
+					matrixB= new Matrix<Double>(Matrices.randomDouble(dimension));
 					System.out.println("Matrix B is created");
 					System.out.println(matrixB);
 					LOGGER.info("Matrix B is created"); 
@@ -64,7 +91,7 @@ public class Runner {
 		}
 		
 		try {
-			matrixC = Matrices.multiply(matrixA, matrixB);
+			matrixC = Matrices.multiplyDouble(matrixA, matrixB);
 			System.out.println("C = A x B");
 			System.out.println(matrixC);
 			LOGGER.info("Matrix C is created"); 

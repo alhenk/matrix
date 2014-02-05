@@ -15,33 +15,36 @@ import com.epam.koryagin.matrix.exception.MatrixException;
 public class Matrix<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(Matrix.class);
-	private int hight;
+	private int height;
 	private int width;
-	private List<List<T>> matrix =
-			new  ArrayList<List<T>>();
+	private List<List<T>> array;
 	
+	/**
+	 * Default constructor
+	 * to be on the safe side
+	 */
 	public Matrix(){
 		super();
 	}
 	
 	/**
 	 * Constructor of square matrix
-	 * @param hight
+	 * @param height
 	 * @param object
 	 * @throws MatrixException 
 	 */
-	public Matrix(int hight, T object) throws MatrixException{
-		if ( hight < 0 ){
+	public Matrix(int height, T object) throws MatrixException{
+		if ( height < 0 ){
 			LOGGER.error("Negative row number");
 			throw new MatrixException("Negative row number");
 		}
-		this.hight = hight;
-		this.width = hight;
-		this.setMatrix(new  ArrayList<List<T>>());
-		for(int i=0; i < hight; i++){
-				this.matrix.add(new ArrayList<T>());
-				for(int j = 0; j < hight; j++){
-					this.matrix.get(i).add(object);
+		this.height = height;
+		this.width = height;
+		this.array = new  ArrayList<List<T>>();
+		for(int i=0; i < height; i++){
+				this.array.add(new ArrayList<T>());
+				for(int j = 0; j < height; j++){
+					this.array.get(i).add(object);
 				}
 		}
 	}
@@ -57,13 +60,13 @@ public class Matrix<T> implements Serializable {
 		if (hight < 0 || width < 0 ){
 			LOGGER.error("Negative row or column number");
 			throw new MatrixException("Negative row or column number");}
-		this.hight = hight;
+		this.height = hight;
 		this.width = width;
-		this.matrix = new  ArrayList<List<T>>();
+		this.array = new  ArrayList<List<T>>();
 		for(int i=0; i < hight; i++){
-				this.matrix.add(new ArrayList<T>());
+				this.array.add(new ArrayList<T>());
 				for(int j = 0; j < width; j++){
-					this.matrix.get(i).add(object);//set(j, object);
+					this.array.get(i).add(object);
 				}
 		}
 	}
@@ -72,7 +75,7 @@ public class Matrix<T> implements Serializable {
 	 * @return row number
 	 */
 	public int getHight() {
-		return hight;
+		return height;
 	}
 	/**
 	 * set row with range checking
@@ -80,10 +83,10 @@ public class Matrix<T> implements Serializable {
 	 * @throws MatrixException
 	 */
 	public void setHight(int hight) throws MatrixException {
-		if (hight < 0 || hight > this.matrix.size()  ){
+		if (hight < 0 || hight > this.array.size()  ){
 			LOGGER.error("row number is out of range");
 			throw new MatrixException("row number is out of range");}
-		this.hight = hight;
+		this.height = hight;
 	}
 	/**
 	 * Get dimension - columns
@@ -98,7 +101,7 @@ public class Matrix<T> implements Serializable {
 	 * @throws MatrixException
 	 */
 	public void setWidth(int width) throws MatrixException {
-		if (width < 0 || width > this.width() ){
+		if (width < 0 || width > this.getMaxWidth() ){
 			LOGGER.error("column number is out of range");
 			throw new MatrixException("column number is out of range");}
 		this.width = width;
@@ -109,12 +112,12 @@ public class Matrix<T> implements Serializable {
 	 * of the 2D List<T>
 	 * @return newMatrix 
 	 */
-	public List<List<T>> yieldMatrix() {
-		List<List<T>> newMatrix = new  ArrayList<List<T>>();
-		for(List<T> list : this.matrix){
-			newMatrix.add(list);
+	public List<List<T>> cloneArray() {
+		List<List<T>> newArray = new  ArrayList<List<T>>();
+		for(List<T> list : this.array){
+			newArray.add(list);
 		}
-		return newMatrix;
+		return newArray;
 	}
 
 	/**
@@ -125,15 +128,15 @@ public class Matrix<T> implements Serializable {
 	 * @param - 2D List<T> 
 	 * @return void
 	 */
-	public Matrix(List<List<T>> matrix) {
+	public Matrix(List<List<T>> array) {
 		List<List<T>> newMatrix = new  ArrayList<List<T>>();
-		for(List<T> list : matrix){
+		for(List<T> list : array){
 			ArrayList<T> tuple = new ArrayList<T>(list); 
 			newMatrix.add(tuple);
 		}
-		this.matrix = newMatrix;
-		this.hight = newMatrix.size();
-		this.width = width();
+		this.array = newMatrix;
+		this.height = newMatrix.size();
+		this.width = getMaxWidth();
 	}
 	/**
 	 * Unsafe getter
@@ -141,7 +144,7 @@ public class Matrix<T> implements Serializable {
 	 * @return
 	 */
 	public List<List<T>> getMatrix() {
-		return matrix;
+		return array;
 	}
 	/**
 	 * Unsafe setter
@@ -149,15 +152,15 @@ public class Matrix<T> implements Serializable {
 	 * @param matrix
 	 */
 	public void setMatrix(List<List<T>> matrix) {
-		this.matrix = matrix;
+		this.array = matrix;
 	}
 	/**
 	 * return maximum length of the tuples in the matrix
 	 * @return
 	 */
-	private int width(){
+	private int getMaxWidth(){
 		int maxLength = 0;
-		for(List<T> list : matrix){
+		for(List<T> list : array){
 			//System.out.println("list size"+list.size());
 			if(list.size() > maxLength){
 				maxLength = list.size(); 
@@ -169,7 +172,7 @@ public class Matrix<T> implements Serializable {
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
-		for(List<T> tuple : matrix){
+		for(List<T> tuple : array){
 			for(T element : tuple){
 				sb.append(element);
 				sb.append("\t");
