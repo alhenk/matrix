@@ -15,5 +15,12 @@ Questionnaire
 	Input values and  parameters  validation
 8)	Logger
 9)	Properties
+10)	Object Oriented Design & UML 
+	USE_CASE;
+	Class diagram;
+	Object diagram;
+	Statechart diagram;
+	Sequence diagram.
+
 
 

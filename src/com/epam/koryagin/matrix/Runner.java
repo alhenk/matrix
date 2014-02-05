@@ -60,7 +60,7 @@ public class Runner {
 		
 		System.out.println(shmatrix);
 		int i=2; int j = 3;
-		System.out.println(shmatrix.getMatrix().get(i).get(j));
+//		System.out.println(shmatrix.getMatrix().get(i).get(j));
 		Matrix<Double> shmatrixA = new Matrix<Double>();
 		Matrix<Double> shmatrixB = new Matrix<Double>();
 		Matrix<Double> shmatrixC = new Matrix<Double>();
