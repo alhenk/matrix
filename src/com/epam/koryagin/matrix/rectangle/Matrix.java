@@ -15,8 +15,8 @@ import com.epam.koryagin.matrix.exception.MatrixException;
 public class Matrix<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final Logger LOGGER = Logger.getLogger(Matrix.class);
-	private int row;
-	private int column;
+	private int hight;
+	private int width;
 	private List<List<T>> matrix =
 			new  ArrayList<List<T>>();
 	
@@ -26,21 +26,21 @@ public class Matrix<T> implements Serializable {
 	
 	/**
 	 * Constructor of square matrix
-	 * @param row
+	 * @param hight
 	 * @param object
 	 * @throws MatrixException 
 	 */
-	public Matrix(int row, T object) throws MatrixException{
-		if ( row < 0 ){
+	public Matrix(int hight, T object) throws MatrixException{
+		if ( hight < 0 ){
 			LOGGER.error("Negative row number");
 			throw new MatrixException("Negative row number");
 		}
-		this.row = row;
-		this.column = row;
+		this.hight = hight;
+		this.width = hight;
 		this.setMatrix(new  ArrayList<List<T>>());
-		for(int i=0; i < row; i++){
+		for(int i=0; i < hight; i++){
 				this.matrix.add(new ArrayList<T>());
-				for(int j = 0; j < row; j++){
+				for(int j = 0; j < hight; j++){
 					this.matrix.get(i).add(object);
 				}
 		}
@@ -48,22 +48,22 @@ public class Matrix<T> implements Serializable {
 	
 	/**
 	 * Constructor of rectangle matrix
-	 * @param row
-	 * @param column
+	 * @param hight
+	 * @param width
 	 * @param object
 	 * @throws MatrixException 
 	 */
-	public Matrix (int row, int column, T object) throws MatrixException{
-		if (row < 0 || column < 0 ){
+	public Matrix (int hight, int width, T object) throws MatrixException{
+		if (hight < 0 || width < 0 ){
 			LOGGER.error("Negative row or column number");
 			throw new MatrixException("Negative row or column number");}
-		this.row = row;
-		this.column = column;
+		this.hight = hight;
+		this.width = width;
 		this.matrix = new  ArrayList<List<T>>();
-		for(int i=0; i < row; i++){
+		for(int i=0; i < hight; i++){
 				this.matrix.add(new ArrayList<T>());
-				for(int j = 0; j < column; j++){
-					this.matrix.get(i).set(j, object);
+				for(int j = 0; j < width; j++){
+					this.matrix.get(i).add(object);//set(j, object);
 				}
 		}
 	}
@@ -71,37 +71,37 @@ public class Matrix<T> implements Serializable {
 	 * Get dimension - rows	
 	 * @return row number
 	 */
-	public int getRow() {
-		return row;
+	public int getHight() {
+		return hight;
 	}
 	/**
 	 * set row with range checking
-	 * @param row
+	 * @param hight
 	 * @throws MatrixException
 	 */
-	public void setRow(int row) throws MatrixException {
-		if (row < 0 || row > this.matrix.size()  ){
+	public void setHight(int hight) throws MatrixException {
+		if (hight < 0 || hight > this.matrix.size()  ){
 			LOGGER.error("row number is out of range");
 			throw new MatrixException("row number is out of range");}
-		this.row = row;
+		this.hight = hight;
 	}
 	/**
 	 * Get dimension - columns
 	 * @return column number
 	 */
-	public int getColumn() {
-		return column;
+	public int getWidth() {
+		return width;
 	}
 	/**
 	 * Set column with range checking
-	 * @param column
+	 * @param width
 	 * @throws MatrixException
 	 */
-	public void setColumn(int column) throws MatrixException {
-		if (column < 0 || column > this.column() ){
+	public void setWidth(int width) throws MatrixException {
+		if (width < 0 || width > this.width() ){
 			LOGGER.error("column number is out of range");
 			throw new MatrixException("column number is out of range");}
-		this.column = column;
+		this.width = width;
 	}
 
 	/**
@@ -132,8 +132,8 @@ public class Matrix<T> implements Serializable {
 			newMatrix.add(tuple);
 		}
 		this.matrix = newMatrix;
-		this.row = newMatrix.size();
-		this.column = column();
+		this.hight = newMatrix.size();
+		this.width = width();
 	}
 	/**
 	 * Unsafe getter
@@ -155,14 +155,15 @@ public class Matrix<T> implements Serializable {
 	 * return maximum length of the tuples in the matrix
 	 * @return
 	 */
-	private int column(){
+	private int width(){
 		int maxLength = 0;
 		for(List<T> list : matrix){
+			//System.out.println("list size"+list.size());
 			if(list.size() > maxLength){
 				maxLength = list.size(); 
 			}
 		}
-		return 0;
+		return maxLength;
 	}
 	
 	@Override

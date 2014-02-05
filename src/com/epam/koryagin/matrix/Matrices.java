@@ -76,30 +76,36 @@ public class Matrices {
 		LOGGER.info("Random matrix creation time "+ (System.nanoTime()-start)+ " nano sec" );
 		return random;
 	}
-	
-	public static Matrix<Double> multiply(Matrix<Double> p, Matrix<Double> q ) throws Exception{
-		int v = p.getColumn(); 
-		int h = q.getRow(); 
-		int temp = p.getRow();
-//		if (temp != q.getColumn()) 
-//			throw new Exception();
-		Matrix<Double> result = new Matrix<Double>();
+	/**
+	 * Multiply two matrices A X B
+	 * @param matrixA
+	 * @param matrixB
+	 * @return matrixC the product result
+	 * @throws Exception
+	 */
+	public static Matrix<Double> multiply(Matrix<Double> matrixA, Matrix<Double> matrixB ) throws Exception{
+		int hightB = matrixB.getHight();
+		int widthA = matrixA.getWidth(); 
+		int hightC = matrixA.getHight();
+		int widthC = matrixB.getWidth();
+		if (widthA != hightB) 
+			throw new Exception();
+		Matrix<Double> matrixC = new Matrix<Double>();
 		try {
-			result = new Matrix<Double>(v, h, new Double(0.0));
+			matrixC = new Matrix<Double>(hightC, widthC, new Double(0.0));
 		} catch (MatrixException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int i = 0; i < v; i++) {
-		for (int j = 0; j < h; j++) {
+		for (int i = 0; i < widthA; i++) {
+		for (int j = 0; j < hightB; j++) {
 			double value = 0.0;
-			for (int k = 0; k < temp; k++) { 
-				value += p.getMatrix().get(i).get(k) * q.getMatrix().get(k).get(j) ;
+			for (int k = 0; k < widthC; k++) { 
+				value += matrixA.getMatrix().get(i).get(k) * matrixB.getMatrix().get(k).get(j) ;
 			}
-			result.getMatrix().get(i).set(j, new Double(value));
+			matrixC.getMatrix().get(i).set(j, new Double(value));
 		}
 		}
-		return result;
+		return matrixC;
 	}
 	/**
 	 * Util class with only static methods
