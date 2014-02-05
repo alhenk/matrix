@@ -20,6 +20,11 @@ To compile and run application with ant
 	
 Total working hours:
 
+
 2014.02.03 - 2:00 h
+
 2014.02.04 - 6:00 h
+
 2014.02.05 - 3:00 h
+
+(11 h)
