@@ -5,9 +5,19 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import com.epam.koryagin.matrix.exception.MatrixException;
 import com.epam.koryagin.matrix.rectangle.Matrix;
-
+/**
+ * Utility class Matrices
+ * @author Admin
+ *
+ */
 public class Matrices {
 	private static final Logger LOGGER = Logger.getLogger(Matrices.class);
+	/**
+	 * Utility class with only static methods
+	 */
+	private Matrices(){
+		super();
+	}
 	
 	/**
 	 * Create identity matrix collection
@@ -58,7 +68,12 @@ public class Matrices {
 		}
 		return zerro;
 	}
-	
+	/**
+	 * Create random square matrix collection
+	 * @param size
+	 * @return
+	 * @throws MatrixException
+	 */
 	public static List<List<Double>> random(int size) throws MatrixException{
 		long start = System.nanoTime();
 		if ( size < 0 ){
@@ -107,11 +122,4 @@ public class Matrices {
 		}
 		return matrixC;
 	}
-	/**
-	 * Util class with only static methods
-	 */
-	private Matrices(){
-		super();
-	}
-
 }

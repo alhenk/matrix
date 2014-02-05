@@ -1,90 +1,77 @@
 package com.epam.koryagin.matrix;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 import org.apache.log4j.Logger;
 
 import com.epam.koryagin.matrix.exception.MatrixException;
-import com.epam.koryagin.matrix.node.Node;
 import com.epam.koryagin.matrix.rectangle.Matrix;
 
 public class Runner {
 	private static final Logger LOGGER = Logger.getLogger(Runner.class);
 		
 	public static void main(String[] args) {
-		Node<Double> node = new Node<Double>(10.2);
-		System.out.println("ID = " + node.getId());
-		System.out.println("VALUE = " + node.getValue());
 		
-		int dimension = 5;
-		Matrix<Node<Double>> matrix = new Matrix<Node<Double>>();
-		try {
-			matrix = new Matrix<Node<Double>>(dimension, node);
-			StringBuilder sb = new StringBuilder()
-					.append("The Matrix ")
-					.append(dimension).append("x").append(dimension)
-					.append(" of ").append(node.getClass())
-					.append(" created");
-			LOGGER.info(sb.toString());
-			System.out.println(sb.toString());
-		} catch (MatrixException e) {
-			e.printStackTrace();
+		Matrix<Double> matrixA= new Matrix<Double>();
+		Matrix<Double> matrixB= new Matrix<Double>();
+		Matrix<Double> matrixC= new Matrix<Double>();
+		
+		Scanner userInput = new Scanner(System.in);
+		System.out.println();
+		System.out.println("Enter dimension of the matrix A");
+		int dimension = 0;
+		boolean state = true;
+		while(state){
+			if (userInput.hasNext()) {
+				if (!userInput.hasNextInt()){
+					userInput.next();
+					System.out.println("Please enter a natural digit.");
+					continue;
+				}
+				dimension = userInput.nextInt();
+				try {
+					matrixA= new Matrix<Double>(Matrices.random(dimension));
+					System.out.println("Matrix A is created");
+					System.out.println(matrixA);
+					LOGGER.info("Matrix A is created"); 
+				} catch (MatrixException e) {
+					e.printStackTrace();
+				}
+				state = false;
+			}
 		}
 		
-		System.out.println(matrix);	
-		
-		List<Double> list = new ArrayList<Double>();
-		list.add(2.3);
-		list.add(2.3);
-		list.add(2.3);
-		list.add(2.3);
-		list.add(2.3);
-		
-		List<List<Double>> biglist = new ArrayList<List<Double>>();
-		biglist.add(list);
-		biglist.add(list);
-		biglist.add(list);
-
-		
-		System.out.println("List Size = " + list.size());
-		System.out.println("Big List Size = " + biglist.size());
-		
-		Matrix<Double> shmatrix = new Matrix<Double>();
-
-		
-		try {
-			shmatrix = new Matrix<Double>(Matrices.random(4));
-		} catch (MatrixException e){
-			System.err.println(e);
+		System.out.println();
+		System.out.println("Enter dimension of the matrix B");
+		state = true;
+		while(state){
+			if (userInput.hasNext()) {
+				if (!userInput.hasNextInt()){
+					userInput.next();
+					System.out.println("Please enter a natural digit.");
+					continue;
+				}
+				dimension = userInput.nextInt();
+				try {
+					matrixB= new Matrix<Double>(Matrices.random(dimension));
+					System.out.println("Matrix B is created");
+					System.out.println(matrixB);
+					LOGGER.info("Matrix B is created"); 
+				} catch (MatrixException e) {
+					e.printStackTrace();
+				}
+				state = false;
+			}
 		}
 		
-		System.out.println(shmatrix);
-		int i=2; int j = 3;
-		Matrix<Double> shmatrixA = new Matrix<Double>();
-		Matrix<Double> shmatrixB = new Matrix<Double>();
-		Matrix<Double> shmatrixC = new Matrix<Double>();
-				
 		try {
-			shmatrixA = new Matrix<Double>(Matrices.random(4));
-		} catch (MatrixException e){
-			System.err.println(e);
-		}
-		try {
-			shmatrixB = new Matrix<Double>(Matrices.random(4));
-		} catch (MatrixException e){
-			System.err.println(e);
-		}
-		try {
-			shmatrixC = Matrices.multiply(shmatrixA, shmatrixB);
+			matrixC = Matrices.multiply(matrixA, matrixB);
+			System.out.println("C = A x B");
+			System.out.println(matrixC);
+			LOGGER.info("Matrix C is created"); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("SHMATRIX A :");
-		System.out.println(shmatrixA);
-		System.out.println("SHMATRIX B :");
-		System.out.println(shmatrixB);
-		System.out.println("SHMATRIX C :");
-		System.out.println(shmatrixC);
-		
+
+		userInput.close();
 	}
 }
