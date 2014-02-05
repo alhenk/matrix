@@ -8,7 +8,7 @@ initialize matrix with random generator in [-n, n] range
 
 
 
-To run the application navigate into the project folder aquarium 
+To run the application navigate into the project folder matrix 
 	$cd matrix
     
 and then enter:
