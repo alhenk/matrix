@@ -99,6 +99,7 @@ public class Matrices {
 	 * @throws Exception
 	 */
 	public static Matrix<Double> multiply(Matrix<Double> matrixA, Matrix<Double> matrixB ) throws Exception{
+		long start = System.nanoTime();
 		int hightB = matrixB.getHight();
 		int widthA = matrixA.getWidth(); 
 		int hightC = matrixA.getHight();
@@ -120,6 +121,7 @@ public class Matrices {
 			matrixC.getMatrix().get(i).set(j, new Double(value));
 		}
 		}
+		LOGGER.info("matrix multiplication time "+ (System.nanoTime()-start)+ " nano sec" );
 		return matrixC;
 	}
 }
